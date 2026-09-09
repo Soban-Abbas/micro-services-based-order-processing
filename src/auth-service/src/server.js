@@ -13,7 +13,7 @@ const startupApp = async () => {
 
     app.use('/health',(req, res)=>{
         res.status(200).json({
-            message:"Your api hit auth service health "
+            message:"Your api hit auth service health endpoint "
         })
     })
     app.listen(port, () => {
