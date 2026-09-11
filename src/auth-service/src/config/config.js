@@ -1,5 +1,5 @@
 require('dotenv').config()
-const envVariables = ['hostname', 'database', 'password', 'port', 'user', 'jwtSecretKey', 'adminName', 'adminEmail', 'adminPassword'];
+const envVariables = ['hostname', 'database', 'password', 'port', 'user', 'DATABASE_URL','jwtSecretKey', 'adminName', 'adminEmail', 'adminPassword'];
 
 const errors = []
 function validateEnv() {
@@ -29,6 +29,7 @@ exports.dbConfiguration={
     user: process.env.user,
     database: process.env.database,
     port: process.env.port,
+    DATABASE_URL:process.env.DATABASE_URL,
     pool: {
         max: 10,
         connectionTimeoutMillis: 5000,//if req comes and not get conection because connection are already busy then it req fails after 5 sec
