@@ -20,9 +20,24 @@ enum Role {
 model user {
   id Int @id @default(autoincrement())
 
-  email     String   @unique
-  password  String
-  role      Role     @default(customer)
-  createdAt DateTime @default(now()) // Auto timestamp
-  updatedAt DateTime @updatedAt
+  email        String        @unique
+  password     String
+  role         Role          @default(customer)
+  createdAt    DateTime      @default(now()) // Auto timestamp
+  updatedAt    DateTime      @updatedAt
+  refreshToken refreshToken[]
+}
+
+model refreshToken {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @unique
+  user      user     @relation(fields: [userId], references: [id])
+  token     String @unique
+  ipAdress String?
+  userAgent String?
+  deviceInfo String?
+  createdAt DateTime @default(now())
+  expiresAt DateTime @default(dbgenerated("NOW() + INTERVAL '7 days'"))
+
+  @@index([userId])
 }

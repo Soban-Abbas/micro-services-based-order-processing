@@ -1,4 +1,3 @@
-const { use } = require("react");
 const { prisma } = require("../config/dbpool");
 const AppError = require("../errorHelpers/appError")
 exports.findByEmail = async (email) => {
