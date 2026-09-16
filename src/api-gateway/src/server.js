@@ -1,15 +1,19 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import  cookieParser from 'cookie-parser'
 import morgan from 'morgan';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import rateLimit from 'express-rate-limit';
 
 const app = express();
 const PORT = process.env.PORT || 8000;
-
+app.use(cookieParser())
 app.use(helmet());
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:8000', // Apne frontend ka exact URL likhein (no slash '/')
+    credentials: true
+}));
 app.use(morgan('dev'));
 
 const limiter = rateLimit({
@@ -19,19 +23,28 @@ const limiter = rateLimit({
 app.use(limiter);
 
 
-app.get('/health', (req, res) => {
+app.get('/health', function(req, res,next){
+console.log(req.header('Cookie'))
+console.log(req.cookies)
     res.status(200).json({ status: 'API Gateway is running' });
 });
 
 
 const proxyOptions = {
     changeOrigin: true,
+
 };
 
 
 app.use('/api/auth', createProxyMiddleware({
     target:  'http://localhost:8001',
     ...proxyOptions,
+// onProxyReq:function(proxyReq,req , res){
+//     console.log(req.header('Cookie'))
+//     if(req.cookie){
+//         proxyReq.setHeader('Cookie',req.header('Cookie'))
+//     }
+// }
 }));
 
 app.use('/api/customer', createProxyMiddleware({

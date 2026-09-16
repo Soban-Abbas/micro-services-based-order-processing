@@ -1,4 +1,4 @@
-const { useragent } = require("express-useragent");
+
 const { prisma } = require("../config/dbpool");
 
 
@@ -16,7 +16,7 @@ exports.addnewToken = async (userId, token, userAgent, ipAdress, deviceInfo) => 
 
     }
 
-    const details = await prisma.refreshToken.create({ useId: userId, token: token, ipAdress: ipAdress, userAgent: userAgent, deviceInfo: deviceInfo, createdAt: new Date(), expiresAt: new Date(Date.now) + 7 * 24 * 60 * 60 * 1000 });
+    const details = await prisma.refreshToken.create({ data:{ userId: userId, token: token, ipAdress: ipAdress, userAgent: userAgent, deviceInfo: deviceInfo, createdAt: new Date(), expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) }});
 
     return details
 

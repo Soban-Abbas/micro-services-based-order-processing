@@ -3,6 +3,7 @@ const helmet = require('helmet')
 const morgan = require('morgan');
 const authRoutes = require("./routes/authRoutes")
 const { globalErrorHandler } = require("./middlewares/globalErrorMiddleware")
+
 const startupApp = async () => {
 
     const app = express();
