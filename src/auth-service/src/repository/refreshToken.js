@@ -1,4 +1,5 @@
 
+const { useragent } = require("express-useragent");
 const { prisma } = require("../config/dbpool");
 
 
@@ -27,7 +28,12 @@ exports.findtokensByUserId = async (userId) => {
     return details
 }
 
-exports.findToken = async (token) => {
-    const details = await prisma.refreshToken.findUnique({ where: { token: token } })
+exports.findByToken  = async (token,userAgent) => {
+    const details = await prisma.refreshToken.findUnique({ where: { token: token, userAgent:userAgent} })
     return details
+}
+
+exports.deleteById=async(id)=>{
+const deleteToken = await prisma.refreshToken.delete({where:{id:id}});
+return deleteToken
 }
