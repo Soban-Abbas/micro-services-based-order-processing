@@ -8,10 +8,11 @@ exports.encryptPassword=async(password)=>{
 }
 
 exports.comparePassword=async(password,encryptedPassword)=>{
-    try {
+    
         const match=await bcrypt.compare(password,encryptedPassword);
+        if(!match){
+            throw new AppError(401,"Wrong email or passwoerd")
+        }
         return match
-    } catch (error) {
-        throw new AppError(500,'password comparison failed')
-    }
+    
 }

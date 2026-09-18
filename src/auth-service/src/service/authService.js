@@ -44,9 +44,7 @@ exports.login = async (email, password, userAgent, ip) => {
     const encryptedPassword = user.password;
     const validPassword = await comparePassword(password, encryptedPassword);
 
-    if (!validPassword) {
-        throw new AppError(401, 'wrong email or password')
-    }
+
 
     const accesstoken = generateAccesstoken(user.id, user.role);
 
@@ -125,4 +123,7 @@ return {
     refresh_token:refresh_token,
     access_token:access_token
 }
+}
+exports.logout=async(token)=>{
+await refreshTokenRepository.deleteToken(token);
 }

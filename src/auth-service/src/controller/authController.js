@@ -43,3 +43,17 @@ exports.googleCallback=catchAsync(async(req, res , next)=>{
     res.redirect('http://localhost:8000/health')
 })
 
+exports.logout=catchAsync(async(req, res,next)=>{
+    
+    const {refresh_token}=req.cookies;
+
+    if(refresh_token){
+        await authService.logout(refresh_token)
+    }
+    res.clearCookie('access_token',{httpOnly:true,sameSite:'strict',maxAge:0});
+    res.clearCookie('refresh_token',{httpOnly:true,sameSite:'strict',maxAge:0});
+    res.status(200).json({
+        success:true,
+        message:"logout successfull",
+    })
+})

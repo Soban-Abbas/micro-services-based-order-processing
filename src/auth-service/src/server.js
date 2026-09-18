@@ -2,6 +2,7 @@ const express = require("express");
 const helmet = require('helmet')
 const morgan = require('morgan');
 const authRoutes = require("./routes/authRoutes")
+const cookiesParser=require("cookie-parser")
 const { globalErrorHandler } = require("./middlewares/globalErrorMiddleware")
 
 const startupApp = async () => {
@@ -9,6 +10,7 @@ const startupApp = async () => {
     const app = express();
     const port = 8001;
     app.use(helmet());
+    app.use(cookiesParser())
     app.use(morgan('dev'));
     app.use(express.json());
     app.use(authRoutes)

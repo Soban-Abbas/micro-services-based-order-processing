@@ -37,3 +37,8 @@ exports.deleteById=async(id)=>{
 const deleteToken = await prisma.refreshToken.delete({where:{id:id}});
 return deleteToken
 }
+
+exports.deleteToken=async(token)=>{
+    await prisma.refreshToken.deleteMany({where:{token:token}});
+    
+}

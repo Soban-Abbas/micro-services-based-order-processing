@@ -40,7 +40,7 @@ app.use('/api/auth', createProxyMiddleware({
     target:  'http://localhost:8001',
     ...proxyOptions,
 // onProxyReq:function(proxyReq,req , res){
-//     console.log(req.header('Cookie'))
+//     console.log(npx prisma studio)
 //     if(req.cookie){
 //         proxyReq.setHeader('Cookie',req.header('Cookie'))
 //     }
